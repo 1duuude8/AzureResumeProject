@@ -1,11 +1,10 @@
-name: Deploy_frontend
-#deploy when the push is made from the frontend folder
+name: Deploy_Frontend
 
 on:
     push:
         branches: [ main ]
         paths:
-        - 'frontend/**'
+      - "frontend/**"
 
 jobs:
   build:
@@ -20,12 +19,13 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload-batch --account-name azureresumeacg8 --auth-mode key -d '$web' -s frontend/
+          az storage blob upload-batch --account-name azureresumeacg8 --auth-mode key -d '$web' -s .
+
     - name: Purge CDN endpoint
       uses: azure/CLI@v1
       with:
         inlineScript: |
-           az cdn endpoint purge --content-paths  "/*" --profile-name "azureresumechallenege" --name "azureresumechallenege" --resource-group "azureresume"
+           az cdn endpoint purge --content-paths "/*" --profile-name "azureresumechallenge" --name "azureresumechallenge" --resource-group "azureresume"
 
   # Azure logout
     - name: logout
